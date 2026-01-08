@@ -7,13 +7,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class InputExample {
-    static void main() {
+public class CalculatorCli {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ZonedDateTime wakeupWIB = ZonedDateTime.now(ZoneId.of("Asia/Jakarta"));
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String waktuString = wakeupWIB.format(dateFormatter) + " "+ wakeupWIB.format(timeFormatter);
+        String waktuString = wakeupWIB.format(dateFormatter) + " " + wakeupWIB.format(timeFormatter);
         String isContinue = "yes";
 
         System.out.println("=====CALCULATOR CLI=====");
@@ -54,11 +54,11 @@ public class InputExample {
 
                 String res = String.format("Result %.2f %c %.2f = %.2f\n", number1, operator, number2, result);
                 writer.write(waktuString + " | ");
-                writer.write(res+"\n");
+                writer.write(res + "\n");
 
                 writer.close();
-            }catch (IOException e){
-                System.err.println("Error whe writing file: "+e.getMessage());
+            } catch (IOException e) {
+                System.err.println("Error whe writing file: " + e.getMessage());
             }
 
             System.out.println("\nContinue?(yes/no):");
