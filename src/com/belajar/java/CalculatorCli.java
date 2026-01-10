@@ -14,11 +14,11 @@ public class CalculatorCli {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String waktuString = wakeupWIB.format(dateFormatter) + " " + wakeupWIB.format(timeFormatter);
-        String isContinue = "yes";
+        boolean isContinue = true;
 
         System.out.println("=====CALCULATOR CLI=====");
 
-        while (isContinue.equals("yes")) {
+        while (isContinue) {
             System.out.println("Enter first number:");
             double number1 = scanner.nextDouble();
 
@@ -62,11 +62,11 @@ public class CalculatorCli {
             }
 
             System.out.println("\nContinue?(yes/no):");
-            isContinue = scanner.next();
+            isContinue = scanner.next().equalsIgnoreCase("yes");
             System.out.println();
+            scanner.close();
         }
 
         System.out.println("Thank you for using Calculator CLI!");
-        scanner.close();
     }
 }
