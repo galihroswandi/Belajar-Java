@@ -1,4 +1,4 @@
-package com.belajar.java;
+package com.belajar.fundamental;
 
 import java.util.Scanner;
 
