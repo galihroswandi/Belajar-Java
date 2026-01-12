@@ -54,5 +54,7 @@ public class GuessTheNumber {
                 Arrays.fill(historyGuess, -1);
             }
         }
+
+        scanner.close();
     }
 }

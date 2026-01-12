@@ -1,8 +1,5 @@
 package com.belajar.looparray;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class ArrayToExcercise {
     public static void main(String[] args) {
         /**

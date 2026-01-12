@@ -12,8 +12,8 @@ public class ArrayStatistic {
 
         byte[] values = new byte[arraySize];
 
-        for (byte i = 0; i < arraySize; i++){
-            System.out.println("Enter a value "+(i+1)+": ");
+        for (byte i = 0; i < arraySize; i++) {
+            System.out.println("Enter a value " + (i + 1) + ": ");
             byte newNumber = scanner.nextByte();
 
             values[i] = newNumber;
@@ -21,7 +21,7 @@ public class ArrayStatistic {
 
         // calculate sum
         int sum = 0;
-        for(int value: values){
+        for (int value : values) {
             sum += value;
         }
 
@@ -30,16 +30,16 @@ public class ArrayStatistic {
 
         // calculate min value
         int minValue = values[0];
-        for(int value: values){
-            if(value<minValue){
+        for (int value : values) {
+            if (value < minValue) {
                 minValue = value;
             }
         }
 
         // calculate max value
         int maxValue = values[0];
-        for(int value: values){
-            if(value > maxValue){
+        for (int value : values) {
+            if (value > maxValue) {
                 maxValue = value;
             }
         }
@@ -47,21 +47,23 @@ public class ArrayStatistic {
         // calculate of even and odd
         int countEven = 0;
         int countOdd = 0;
-        for(int value: values){
-            if(value % 2 == 0){
+        for (int value : values) {
+            if (value % 2 == 0) {
                 countEven++;
-            }else {
+            } else {
                 countOdd++;
             }
         }
 
         System.out.println("\n════════ YOUR STATISTIC ════════");
-        System.out.println("SUM : "+sum);
-        System.out.println("AVERAGE: "+average);
-        System.out.println("MIN: "+minValue);
-        System.out.println("MAX: "+maxValue);
-        System.out.println("EVEN: "+countEven);
-        System.out.println("ODD: "+countOdd);
+        System.out.println("SUM : " + sum);
+        System.out.println("AVERAGE: " + average);
+        System.out.println("MIN: " + minValue);
+        System.out.println("MAX: " + maxValue);
+        System.out.println("EVEN: " + countEven);
+        System.out.println("ODD: " + countOdd);
         System.out.println("══════════════════════════════════");
+
+        scanner.close();
     }
 }

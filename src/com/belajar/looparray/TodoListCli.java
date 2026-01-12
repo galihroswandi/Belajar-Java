@@ -141,6 +141,9 @@ public class TodoListCli {
                     System.err.println("❌ Invalid option! Please choose between 1-5.");
                     break;
             }
+
+            scanner.nextLine(); // Clear buffer
+            scanner.close();
         }
     }
 }
