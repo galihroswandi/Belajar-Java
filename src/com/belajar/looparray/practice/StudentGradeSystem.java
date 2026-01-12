@@ -1,4 +1,4 @@
-package com.belajar.looparray;
+package com.belajar.looparray.practice;
 
 import java.util.Scanner;
 

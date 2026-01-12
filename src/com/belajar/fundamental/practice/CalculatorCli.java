@@ -1,4 +1,4 @@
-package com.belajar.fundamental;
+package com.belajar.fundamental.practice;
 
 import java.io.FileWriter;
 import java.io.IOException;
