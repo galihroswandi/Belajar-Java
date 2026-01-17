@@ -1,4 +1,4 @@
-package com.belajar.oop.practice.excercise1;
+package com.belajar.oop.practice.bankaccountsystem;
 
 import java.text.NumberFormat;
 import java.util.Locale;

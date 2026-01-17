@@ -1,4 +1,4 @@
-package com.belajar.oop.practice.excercise1;
+package com.belajar.oop.practice.bankaccountsystem;
 
 public class BankAccountSystem {
     private String accountNumber;
