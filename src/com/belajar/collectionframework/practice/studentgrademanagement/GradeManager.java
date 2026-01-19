@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class GradeManager {
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     public GradeManager() {
         students = new ArrayList<>();
