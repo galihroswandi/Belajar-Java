@@ -16,12 +16,13 @@ public class Main {
         HashSet<String> filtered = new HashSet<>(inputStudent);
 
         ArrayList<String> studentsIDs = new ArrayList<>();
-        for(String filter: filtered){
-            if(!filter.isEmpty()){
+        for (String filter : filtered) {
+            if (!filter.isEmpty()) {
                 studentsIDs.add(filter);
             }
         }
 
         System.out.println(studentsIDs.toString());
+        scanner.close();
     }
 }
