@@ -7,17 +7,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PencatatPengeluaran {
     private ArrayList<Expense> pengeluaran;
-    private String namaFile;
+    private final Path DATA_DIR = Paths.get("data");
+    private final Path FILE_DATA;
 
     public PencatatPengeluaran(String namaFile) {
         this.pengeluaran = new ArrayList<>();
-        this.namaFile = namaFile;
+        this.FILE_DATA = DATA_DIR.resolve(namaFile);
         muatDariFile();
     }
 
@@ -55,12 +58,12 @@ public class PencatatPengeluaran {
         System.out.println("\n╔════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                    SEMUA PENGELUARAN                               ║");
         System.out.println("╠════════════════════════════════════════════════════════════════════╣");
-        System.out.printf("║ %-4s %-15s %-12s %-14s %-20s ║\n",
+        System.out.printf("║ %-4s %-15s %-12s %-14s %-17s ║\n",
                 "#", "KATEGORI", "TANGGAL", "JUMLAH", "DESKRIPSI");
         System.out.println("╠════════════════════════════════════════════════════════════════════╣");
 
         for (int i = 0; i < pengeluaran.size(); i++) {
-            System.out.printf("║ %-4d %s ║\n", (i + 1), pengeluaran.get(i).toString());
+            System.out.printf("║ %-4d %s \n", (i + 1), pengeluaran.get(i).toString());
         }
 
         System.out.println("╚════════════════════════════════════════════════════════════════════╝");
@@ -88,7 +91,7 @@ public class PencatatPengeluaran {
 
         double total = 0;
         for (int i = 0; i < terfilter.size(); i++) {
-            System.out.printf("║ %-4d %s ║\\n" + (i + 1), terfilter.get(i).toString());
+            System.out.printf("║ %-4d %s ║\n", (i + 1), terfilter.get(i).toString());
             total += terfilter.get(i).getJumlah();
         }
 
@@ -116,12 +119,12 @@ public class PencatatPengeluaran {
         System.out.println("\n╔═══════════════════════════════════════════╗");
         System.out.println("║      RINGKASAN KATEGORI                   ║");
         System.out.println("╠═══════════════════════════════════════════╣");
-        System.out.printf("║ %-25s %-14s ║\n", "KATEGORI", "TOTAL");
+        System.out.printf("║ %-25s %-15s ║\n", "KATEGORI", "TOTAL");
         System.out.println("╠═══════════════════════════════════════════╣");
 
         double totalBesar = 0;
         for (HashMap.Entry<String, Double> entry : totalKategori.entrySet()) {
-            System.out.printf("║ %-25s Rp%-13.2f ║\\n" + //
+            System.out.printf("║ %-25s Rp%-13.2f ║\n", //
                     entry.getKey(), entry.getValue());
             totalBesar += entry.getValue();
         }
@@ -146,7 +149,7 @@ public class PencatatPengeluaran {
             return;
         }
 
-        String namaBulan = LocalDate.of(bulan, tahun, 1).getMonth().toString();
+        String namaBulan = LocalDate.of(tahun, bulan, 1).getMonth().toString();
 
         System.out.println("\n╔════════════════════════════════════════════════════════╗");
         System.out.println("║ LAPORAN BULANAN: " + namaBulan + " " + tahun);
@@ -163,19 +166,19 @@ public class PencatatPengeluaran {
             totalJumlah += jumlah;
         }
 
-        System.out.printf("║ %-30s %-15s %-10s ║\n", "KATEGORI", "JUMLAH", "PERSENTASE");
+        System.out.printf("║ %-20s %-16s %-16s ║\n", "KATEGORI", "JUMLAH", "PERSENTASE");
         System.out.println("╠════════════════════════════════════════════════════════╣");
 
         for (HashMap.Entry<String, Double> entry : totalKategori.entrySet()) {
             double persentase = (entry.getValue() / totalJumlah) * 100;
-            System.out.printf("║ %-30s Rp%-14.2f %-9.1f%% ║\n",
+            System.out.printf("║ %-20s Rp%-14.2f %-15.1f%% ║\n",
                     entry.getKey(), entry.getValue(), persentase);
 
         }
 
         System.out.println("╠════════════════════════════════════════════════════════╣");
-        System.out.printf("║ TOTAL: Rp%-14.2f                              ║\n", totalJumlah);
-        System.out.printf("║ Jumlah Pengeluaran: %-33d ║\n", pengeluaranBulanan.size());
+        System.out.printf("║ TOTAL: Rp%-45.2f ║\n", totalJumlah);
+        System.out.printf("║ Jumlah Pengeluaran: %-34d ║\n", pengeluaranBulanan.size());
         System.out.println("╚════════════════════════════════════════════════════════╝\n");
     }
 
@@ -201,13 +204,13 @@ public class PencatatPengeluaran {
 
     // Simpan ke file CSV
     public void simpanKeFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(namaFile))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_DATA.toString()))) {
             // Tulis header
             writer.println("Kategori,Tanggal,Jumlah,Deskripsi");
 
             // Tulis setiap expense
             for (Expense expense : pengeluaran) {
-                writer.print(expense.toCSV());
+                writer.println(expense.toCSV());
             }
         } catch (IOException e) {
             System.out.println("❌ Error menyimpan ke file: " + e.getMessage());
@@ -216,14 +219,14 @@ public class PencatatPengeluaran {
 
     // Muat dari CSV
     public void muatDariFile() {
-        File file = new File(namaFile);
+        File file = new File(FILE_DATA.toString());
 
         if (!file.exists()) {
             System.out.println("ℹ️ File tidak ditemukan. Mulai dari awal.");
             return;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(namaFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_DATA.toString()))) {
             String baris;
             boolean barisPertama = true;
             int terbaca = 0;
@@ -242,6 +245,7 @@ public class PencatatPengeluaran {
                 }
 
                 try {
+                    System.err.println(baris);
                     Expense expense = Expense.fromCSV(baris);
                     pengeluaran.add(expense);
                     terbaca++;
@@ -256,7 +260,7 @@ public class PencatatPengeluaran {
                 System.out.println("⚠️ " + errorCount + " baris tidak dapat dimuat");
             }
         } catch (FileNotFoundException e) {
-            System.out.println("❌ File tidak ditemukan: " + namaFile);
+            System.out.println("❌ File tidak ditemukan: " + FILE_DATA.toString());
         } catch (IOException e) {
             System.out.println("❌ Error memuat file: " + e.getMessage());
         }
